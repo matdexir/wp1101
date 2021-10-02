@@ -30,6 +30,7 @@ header {
 img {
   width: 400px;
   height: 400px;
+  flex-shrink: 0;
   /* -webkit-transition: padding 2s; */
 }
 
@@ -75,6 +76,30 @@ header {
   position: fixed;
   z-index: 999;
   width: 100%;
+}
+
+.col {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+.col img {
+  min-width: 50%;
+  min-height: 50%;
+}
+
+.row {
+  display: flex;
+  flex-wrap: true;
+  flex-direction: row ;
+  justify-content: center;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
 }
 
 .nav-toggle {
@@ -172,12 +197,14 @@ nav a:hover {
   width: 70%;
   max-width: 1000px;
   margin: 0 auto;
+  border-radius: 15px 50px;
 }
 
 .wrapper {
-  box-shadow: 1px 1px 10px #999;
+  /* box-shadow: 1px 1px 10px #999; */
   position: relative;
   text-align: center;
+  padding: 1%;
 }
 
 .scrolls {
@@ -201,7 +228,7 @@ nav a:hover {
   }
 
   nav {
-   // all: unset; /* this causes issues with Edge, since it's unsupported */
+    // all: unset; /* this causes issues with Edge, since it's unsupported */
 
     /* the following lines are not from my video, but add Edge support */
     position: relative;
