@@ -31,38 +31,24 @@ img {
   width: 400px;
   height: 400px;
   flex-shrink: 0;
-  /* -webkit-transition: padding 2s; */
 }
 
 img:hover {
   box-shadow: 0 0 5px 5px #cbf7ed;
-  height: 500px;
   transition-timing-function: ease-in;
   transition: width 1s, height 1s;
-  width: 500px;
-  /* -webkit-transition: border-radius 2s; */
+  /* transform: scale(1.2); */
+  size: 120%;
 }
 
-img:hover::after {
-  transition: width 1s, height 1s;
-  width: 450px;
-  height: 450px;
-}
-
-img.highlighted {
-  height: 200px;
-  width: 200px;
-  margin: 10px;
-}
-
-img.star {
-  width: 300px;
-  height: 300px;
-}
+/* img:hover::after { */
+  /* transition: width 1s, height 1s; */
+/* } */
 
 .content {
-  height: 200vh;
-  background-image: url(//unsplash.it/1000/1000);
+  height: 100%;
+  width: auto;
+  background-image: url("./painting/gallery.jpg");
   background-color: #333;
   background-blend-mode: multiply;
   background-size: cover;
@@ -91,6 +77,13 @@ header {
 .col img {
   min-width: 50%;
   min-height: 50%;
+}
+
+.col img:hover {
+  box-shadow: 0 0 5px 5px #cbf7ed;
+  transition-timing-function: ease-in;
+  transition: width 1s, height 1s;
+  transform: scale(1.2);
 }
 
 .row {
@@ -225,6 +218,11 @@ nav a:hover {
 
   .logo {
     grid-column: 2 / 3;
+  }
+
+  .content {
+     height: 200vh;
+     width: auto;
   }
 
   nav {
