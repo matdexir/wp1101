@@ -11,7 +11,15 @@
   <body>
     <header>
       <h1 class="logo">
-        <a href="#" style="color: inherit; text-decoration: none">Gallery</a>
+        <a
+          href="#"
+          style="
+            color: inherit;
+            text-decoration: none;
+            font-family: 'Bebas Neue', cursive;
+          "
+          >Art Gallery</a
+        >
       </h1>
       <input type="checkbox" id="nav-toggle" class="nav-toggle" />
       <nav>
@@ -21,7 +29,7 @@
               <a href="#"> Home </a>
             </li>
             <li>
-              <a href="#gallery"> Gallery </a>
+              <a href="#gallery"> Carousel </a>
             </li>
             <li>
               <a href="#contact"> Contact </a>
@@ -34,15 +42,18 @@
       </label>
     </header>
     <div class="content">
-      <div class="container">
+      <div class="intro-text">
+        <h1>Welcome to the Art Gallery</h1>
+        <p>Written in pure html & css.</p>
+      </div>
+      <div class="container" id="gallery">
         <div class="row">
           <div class="col">
             <img
               src="painting/alan-scales-1_WMZARl81c-unsplash.jpg"
-              style="min-width: 100%; min-height: 100%"
             />
           </div>
-          <div class="col" style="position:relative; size: 70%;">
+          <div class="col" style="position: relative; size: 70%">
             <img
               src="painting/enzo-tommasi-wlxJ4idMTUk-unsplash.jpg"
               style="padding-bottom: 1rem"
@@ -50,18 +61,50 @@
             <img src="painting/geordanna-cordero-pqtOMmZBpM8-unsplash.jpg" />
           </div>
         </div>
-        <div class="wrapper" id="gallery">
+        <div class="wrapper">
           <div class="scrolls">
-            <img src="painting/henrik-donnestad-_u-xUWiLiJo-unsplash.jpg" alt="Chait Goli" />
-            <img src="painting/jene-stephaniuk--MCrF6hnojU-unsplash.jpg" alt="Chait Goli" />
-            <img src="painting/solen-feyissa-WmHlspV3aMI-unsplash.jpg" alt="Chait Goli" />
-            <img src="painting/steve-johnson-Xx_d26R37E4-unsplash.jpg" alt="Chait Goli" />
-            <img src="painting/steve-johnson-eVaxJVA2zHI-unsplash.jpg" alt="Chait Goli" />
-            <img src="painting/pawel-czerwinski-yn97LNy0bao-unsplash.jpg" alt="Chait Goli" />
-            <img src="painting/alan-scales-1_WMZARl81c-unsplash.jpg" alt="Chait Goli" />
-            <img src="painting/geordanna-cordero-5NE6mX0WVfQ-unsplash.jpg" alt="Chait Goli" />
-            <img src="painting/usgs-hoS3dzgpHzw-unsplash.jpg" alt="Chait Goli" />
-            <img src="painting/enzo-tommasi-wlxJ4idMTUk-unsplash.jpg" alt="Chait Goli" />
+            <div class="row">
+              <img
+                src="painting/henrik-donnestad-_u-xUWiLiJo-unsplash.jpg"
+                alt="Chait Goli"
+              />
+              <img
+                src="painting/jene-stephaniuk--MCrF6hnojU-unsplash.jpg"
+                alt="Chait Goli"
+              />
+              <img
+                src="painting/solen-feyissa-WmHlspV3aMI-unsplash.jpg"
+                alt="Chait Goli"
+              />
+              <img
+                src="painting/steve-johnson-Xx_d26R37E4-unsplash.jpg"
+                alt="Chait Goli"
+              />
+              <img
+                src="painting/steve-johnson-eVaxJVA2zHI-unsplash.jpg"
+                alt="Chait Goli"
+              />
+              <img
+                src="painting/pawel-czerwinski-yn97LNy0bao-unsplash.jpg"
+                alt="Chait Goli"
+              />
+              <img
+                src="painting/alan-scales-1_WMZARl81c-unsplash.jpg"
+                alt="Chait Goli"
+              />
+              <img
+                src="painting/geordanna-cordero-5NE6mX0WVfQ-unsplash.jpg"
+                alt="Chait Goli"
+              />
+              <img
+                src="painting/usgs-hoS3dzgpHzw-unsplash.jpg"
+                alt="Chait Goli"
+              />
+              <img
+                src="painting/enzo-tommasi-wlxJ4idMTUk-unsplash.jpg"
+                alt="Chait Goli"
+              />
+            </div>
           </div>
         </div>
       </div>
