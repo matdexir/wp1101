@@ -32,7 +32,6 @@ header {
 img {
   width: 20vh;
   height: 20vh;
-  flex-shrink: 0;
 }
 
 img:hover {
@@ -55,8 +54,8 @@ img:hover {
 }
 
 .content {
-  height: 90vh;
-  width: 40vh;
+  height: 200vh;
+  width: auto;
   background-image: url("./painting/gallery.jpg");
   background-color: #333;
   background-blend-mode: multiply;
@@ -65,10 +64,18 @@ img:hover {
   place-items: center;
 }
 
+.content intro-text {
+  display: block;
+  margin-top: 10vh;
+  min-width: 30vh;
+  min-height: auto;
+}
+
 .content h1 {
   color: white;
   font-family: "Bebas Neue", cursive;
   padding-top: 2rem;
+  text-align: center;
 }
 
 .content p {
@@ -88,24 +95,27 @@ header {
 .col {
   display: flex;
   flex-grow: 1;
+  margin: 2%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  padding-left: 2%;
-  padding-right: 2%;
 }
 
 .col img {
-  min-width: 10vh;
-  min-height: 10vh;
+  margin: 1%;
+  /* min-width: 10vh; */
+  /* min-height: 10vh; */
+  width: 40vw;
+  height: 40vh;
 }
 
 .col img:hover {
   box-shadow: 0 0 5px 5px #cbf7ed;
-  transition-timing-function: ease-in;
-  transition: width 1s, height 1s;
   transform: scale(1.2);
+  transition: transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.3s;
 }
 
 .row {
@@ -113,8 +123,8 @@ header {
   flex-wrap: true;
   flex-direction: row;
   justify-content: center;
-  padding-bottom: 1rem;
-  padding-top: 1rem;
+  padding-bottom: 0.2rem;
+  padding-top: 0.2rem;
 }
 
 .nav-toggle {
@@ -209,17 +219,20 @@ nav a:hover {
 }
 
 .container {
+  top: 50%;
+  left: 50%;
   background: black;
-  width: 70%;
-  max-width: 1000px;
-  margin: 0 auto;
-  border-radius: 15px 50px;
+  opacity: 0.7;
+  width: 70vw;
+  max-width: 1200px;
+  /* margin: 0 auto; */
+  border-radius: 15px;
 }
 
 .wrapper {
   position: relative;
   text-align: center;
-  padding: 1%;
+  padding: 0.2rem;
 }
 
 .scrolls {
@@ -229,16 +242,24 @@ nav a:hover {
 }
 
 .scrolls img {
-  width: 20vh;
+  margin: 0.2rem;
+  width: 20vw;
   height: 20vh;
 }
 
 .scrolls img:hover {
-  position: relative;
-  min-width: 30vh;
-  height: auto;
+  box-shadow: 0 0 5px 5px #cbf7ed;
+  width: 25vw;
+  height: 25vh;
+  transition: transform;
   transition: width 1s, height 1s;
   transition-timing-function: ease-in-out;
+}
+
+.scrolls img:hover::after {
+  width: 500px;
+  height: auto;
+  transition: width 1s, height 1s;
 }
 
 @media screen and (min-width: 800px) {
@@ -266,7 +287,7 @@ nav a:hover {
   }
 
   nav {
-    // all: unset; /* this causes issues with Edge, since it's unsupported */
+    /* // all: unset; [> this causes issues with Edge, since it's unsupported <] */
 
     /* the following lines are not from my video, but add Edge support */
     position: relative;
