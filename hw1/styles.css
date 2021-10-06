@@ -55,8 +55,8 @@ img:hover {
 }
 
 .content {
-  height: 100%;
-  width: auto;
+  height: 90vh;
+  width: 40vh;
   background-image: url("./painting/gallery.jpg");
   background-color: #333;
   background-blend-mode: multiply;
@@ -228,6 +228,19 @@ nav a:hover {
   white-space: nowrap;
 }
 
+.scrolls img {
+  width: 20vh;
+  height: 20vh;
+}
+
+.scrolls img:hover {
+  position: relative;
+  min-width: 30vh;
+  height: auto;
+  transition: width 1s, height 1s;
+  transition-timing-function: ease-in-out;
+}
+
 @media screen and (min-width: 800px) {
   .nav-toggle-label {
     display: none;
@@ -300,18 +313,5 @@ nav a:hover {
 
   nav a:hover::before {
     transform: scale(1, 1);
-  }
-
-  .scrolls img {
-    width: 20vh;
-    height: 20vh;
-  }
-
-  .scrolls img:hover {
-    position: relative;
-    min-width: 30vh;
-    height: auto;
-    transition: width 1s, height 1s;
-    transition-timing-function: ease-in-out;
   }
 }
