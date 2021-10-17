@@ -94,6 +94,14 @@ function expandImg(imgs) {
   expandedImg.src = imgs.src;
   // imgText.innerHTML = imgs.alt;
   expandedImg.parentElement.style.display = "block";
+  let del_btn = document.getElementById("del-btn");
+  del_btn.style.display = "inline"
+}
+
+function closeExpanded(btn) {
+  btn.parentElement.style.display = "none";
+  let del_btn = document.getElementById("del-btn");
+  del_btn.style.display = "none"
 }
 
 function clearModal() {
