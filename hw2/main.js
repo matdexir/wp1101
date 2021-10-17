@@ -61,6 +61,34 @@ function expandImg(imgs) {
   expandedImg.parentElement.style.display = "block";
 }
 
+function clearModal() {
+  let modal = document.getElementById("inner-modal");
+  while (modal.lastChild.nodeType !== modal.firstChild.nodeType) {
+    console.log(modal.lastChild + modal.firstChild);
+    modal.removeChild(modal.lastChild);
+  }
+}
+
+function parseAlbums() {
+  clearModal();
+  let modal = document.getElementById("inner-modal");
+  for (let i = 0; i < Albums.length; i++) {
+    let new_album = document.createElement("div");
+    new_album.setAttribute("class", "album-preview");
+    let thumbnail = Albums[i].images;
+    if (thumbnail == null) thumbnail = defaultContent.images[0];
+    else thumbnail = thumbnail[0];
+    new_album.innerHTML =
+      '<img class="thumbnail" src=' +
+      thumbnail +
+      "/>" +
+      "<p>" +
+      Albums[i].name +
+      "</p>";
+    modal.appendChild(new_album);
+  }
+}
+
 function init() {
   let defaultContent = new Album("Default Gallery");
   let defaultImages = [
@@ -78,16 +106,17 @@ function init() {
   loadAlbum(defaultContent);
 
   // Get the modal
-  var modal = document.getElementById("album-modal");
+  let modal = document.getElementById("album-modal");
 
   // Get the button that opens the modal
-  var btn = document.getElementById("modal-btn");
+  let btn = document.getElementById("modal-btn");
 
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("modal-close")[0];
+  let span = document.getElementsByClassName("modal-close")[0];
 
   // When the user clicks the button, open the modal
   btn.onclick = function () {
+    parseAlbums();
     modal.style.display = "block";
   };
 
