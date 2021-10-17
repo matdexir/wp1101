@@ -52,8 +52,6 @@ function createAlbum() {
   // }
   if (greenLight === true) {
     let [ret, img_url] = promptImage();
-    // alert(ret);
-    // alert(img_url);
     if (ret != null) {
       new_album = new Album(name);
       new_album.images.push(img_url);
@@ -73,11 +71,11 @@ function loadAlbum(Album) {
     alert("No images in the album");
     return;
   }
-  // alert("Album loaded!");
   for (let i = 0; i < Album.images.length; i++) {
     let new_img = document.createElement("img");
     new_img.setAttribute("src", Album.images[i]);
     new_img.setAttribute("id", Album.id);
+    new_img.setAttribute("alt", i);
     new_img.setAttribute("onclick", "expandImg(this)");
     carousel.appendChild(new_img);
   }
@@ -92,16 +90,17 @@ function expandImg(imgs) {
   let expandedImg = document.getElementById("expanded-img");
   // let imgText = document.getElementById("img-text");
   expandedImg.src = imgs.src;
+  expandedImg.alt = imgs.id + " " + imgs.alt;
   // imgText.innerHTML = imgs.alt;
   expandedImg.parentElement.style.display = "block";
   let del_btn = document.getElementById("del-btn");
-  del_btn.style.display = "inline"
+  del_btn.style.display = "inline";
 }
 
 function closeExpanded(btn) {
   btn.parentElement.style.display = "none";
   let del_btn = document.getElementById("del-btn");
-  del_btn.style.display = "none"
+  del_btn.style.display = "none";
 }
 
 function clearModal() {
@@ -162,6 +161,26 @@ function init() {
   };
 
   let del_btn = document.getElementById("del-btn");
+  del_btn.onclick = function () {
+    let first_img = document.getElementById("expanded-img");
+    let ret = confirm("Do you want to delete this image?");
+    if (ret) {
+      let inner_id = first_img.alt.match(/^[0-9]+/);
+      let array_id = first_img.alt.match(/[0-9]+$/);
+      if (Albums[inner_id].images.length > 1) {
+        let carousel = document.getElementById("carousel");
+        let list = carousel.getElementsByTagName("img");
+	console.log(list);
+        let display_next;
+        if (list[array_id - 1]) display_next = list[array_id - 1];
+        if (list[array_id + 1]) display_next = list[array_id + 1];
+        expandImg(display_next);
+      }
+      Albums[inner_id].images.splice(array_id, 1);
+      loadAlbum(Albums[inner_id]);
+      alert("Image deleted successfully.");
+    }
+  };
 
   // Get the modal
   let modal = document.getElementById("album-modal");
