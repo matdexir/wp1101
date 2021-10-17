@@ -51,11 +51,14 @@ function createAlbum() {
   }
   // }
   if (greenLight === true) {
-    let { ret, img_url } = promptImage();
+    let [ret, img_url] = promptImage();
+    alert(ret);
+    alert(img_url);
     if (ret != null) {
       new_album = new Album(name);
       new_album.images.push(img_url);
       Albums.push(new_album);
+      parseAlbums();
       alert("Success");
     }
   }
