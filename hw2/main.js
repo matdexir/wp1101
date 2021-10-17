@@ -78,6 +78,9 @@ function loadAlbum(Album) {
     new_img.setAttribute("alt", i);
     new_img.setAttribute("onclick", "expandImg(this)");
     carousel.appendChild(new_img);
+    if (i === 0) {
+      new_img.click();
+    }
   }
 }
 

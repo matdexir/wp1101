@@ -186,7 +186,8 @@ img.thumbnail {
   border: 1px solid #ddd; /* Gray border */
   border-radius: 4px; /* Rounded border */
   padding: 5px; /* Some padding */
-  width: 150px; /* Set a small width */
+  width: 25vw; /* Set a small width */
+  max-width: 150px;
 }
 
 /* Add a hover effect (blue shadow) */
@@ -195,16 +196,48 @@ img.thumbnail:hover {
 }
 
 .album-preview {
+  margin-top: 2rem;
+  width: 30vw;
+  height: 30vh;
+  max-width: 200px;
+  display: block;
   justify-content: center;
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+.album-preview p {
+  font-size: 0.7rem;
+  font-family: "Bebas Neue", cursive;
+  text-align: center;
+}
+
+.album-preview img {
+  display: block;
+  margin: auto;
 }
 
 /* Modal Content */
 .modal-content {
   background-color: #fefefe;
+  display: flex;
+  overflow: auto;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+}
+
+.modal-content button {
+  margin-top: 2rem;
+  width: 200px;
+  height: 200px;
+  padding: 5px; /* Some padding */
+}
+
+.modal-content p {
+  font-size: 1rem;
+  font-family: "Bebas Neue", cursive;
 }
 
 /* The Close Button */
