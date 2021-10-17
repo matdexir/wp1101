@@ -52,8 +52,8 @@ function createAlbum() {
   // }
   if (greenLight === true) {
     let [ret, img_url] = promptImage();
-    alert(ret);
-    alert(img_url);
+    // alert(ret);
+    // alert(img_url);
     if (ret != null) {
       new_album = new Album(name);
       new_album.images.push(img_url);
@@ -83,6 +83,11 @@ function loadAlbum(Album) {
   }
 }
 
+function loadAlbumFromDiv(Preview) {
+  loadAlbum(Albums[Preview.id]);
+  alert(Albums[Preview.id] + " loaded.");
+}
+
 function expandImg(imgs) {
   let expandedImg = document.getElementById("expanded-img");
   // let imgText = document.getElementById("img-text");
@@ -105,6 +110,8 @@ function parseAlbums() {
   for (let i = 0; i < Albums.length; i++) {
     let new_album = document.createElement("div");
     new_album.setAttribute("class", "album-preview");
+    new_album.setAttribute("id", i);
+    new_album.setAttribute("onclick", "loadAlbumFromDiv(this)");
     let thumbnail = Albums[i].images;
     if (thumbnail == null) thumbnail = defaultContent.images[0];
     else thumbnail = thumbnail[0];
@@ -117,6 +124,11 @@ function parseAlbums() {
       "</p>";
     modal.appendChild(new_album);
   }
+  let album_list = modal.getElementsByTagName("div");
+  console.log(album_list);
+  // for (let i = 0; i < album_list.length; i++) {
+    // let inner_album = album_list[i];
+  // }
 }
 
 function init() {
