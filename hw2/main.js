@@ -85,7 +85,7 @@ function loadAlbum(Album) {
 
 function loadAlbumFromDiv(Preview) {
   loadAlbum(Albums[Preview.id]);
-  alert(Albums[Preview.id] + " loaded.");
+  alert(Albums[Preview.id].name + " loaded.");
 }
 
 function expandImg(imgs) {
@@ -99,7 +99,6 @@ function expandImg(imgs) {
 function clearModal() {
   let modal = document.getElementById("inner-modal");
   while (modal.lastChild.nodeType !== modal.firstChild.nodeType) {
-    console.log(modal.lastChild + modal.firstChild);
     modal.removeChild(modal.lastChild);
   }
 }
@@ -124,11 +123,6 @@ function parseAlbums() {
       "</p>";
     modal.appendChild(new_album);
   }
-  let album_list = modal.getElementsByTagName("div");
-  console.log(album_list);
-  // for (let i = 0; i < album_list.length; i++) {
-    // let inner_album = album_list[i];
-  // }
 }
 
 function init() {
