@@ -172,7 +172,7 @@ img:hover {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 30vh; /* Location of the box */
+  padding-top: 50vh; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -253,6 +253,24 @@ nav a {
   text-transform: uppercase;
   opacity: 0;
   transition: opacity 150ms ease-in-out;
+}
+
+button {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  outline: none;
+  border: 0;
+  border-radius: 20px;
+  padding: 0.45em 1em;
+  background: var(--background);
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+
+button:hover,
+button:active {
+  background: rgba(0, 250, 170, 0.85);
 }
 
 nav a:hover {
