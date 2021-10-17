@@ -70,22 +70,35 @@ function loadAlbum(Album) {
     alert("No images in the album");
     return;
   }
-  // alert("Album loaded!");
   for (let i = 0; i < Album.images.length; i++) {
     let new_img = document.createElement("img");
     new_img.setAttribute("src", Album.images[i]);
-    new_img.setAttribute("id", Album.id);
-    new_img.setAttribute("onclick", "expandImg(this)");
+    new_img.setAttribute("id", Album.id+Album.name);
+    new_img.setAttribute("alt", i);
+    new_img.onclick = function () {
+      let expanded_img = document.getElementById("expanded-img");
+      // let imgText = document.getElementById("img-text");
+      let tmp_img =  document.getElementById(new_img.id);
+      alert(tmp_img.src);
+      expanded_img.src = tmp_img.src;
+      expanded_img.alt = tmp_img.alt;
+      // expanded_img.id = tmp_img.id;
+      // imgText.innerHTML = imgs.alt;
+      expanded_img.parentElement.style.display = "block";
+    };
+    // new_img.setAttribute("onclick", "expandImg(this)");
     carousel.appendChild(new_img);
   }
 }
 
-function expandImg(imgs) {
-  let expandedImg = document.getElementById("expanded-img");
+function expandImg(img) {
+  let expanded_img = document.getElementById("expanded-img");
   // let imgText = document.getElementById("img-text");
-  expandedImg.src = imgs.src;
+  expanded_img.src = img.src;
+  expanded_img.alt = img.alt;
+  expanded_img.id = img.id;
   // imgText.innerHTML = imgs.alt;
-  expandedImg.parentElement.style.display = "block";
+  expanded_img.parentElement.style.display = "block";
 }
 
 function clearModal() {
@@ -123,6 +136,8 @@ function init() {
     "https://i.postimg.cc/VkB8k0QX/steve-johnson-Xx-d26-R37-E4-unsplash.jpg",
     "https://i.postimg.cc/VkB8k0QX/steve-johnson-Xx-d26-R37-E4-unsplash.jpg",
     "https://i.postimg.cc/XNxvNhWs/steve-johnson-e-Vax-JVA2z-HI-unsplash.jpg",
+    "https://i.ibb.co/fqqw8wW/usgs-ho-S3dzgp-Hzw-unsplash.jpg",
+    "https://farm4.staticflickr.com/3894/15008518202_c265dfa55f_h.jpg",
   ];
 
   for (let i = 0; i < defaultImages.length; i++) {
@@ -131,6 +146,7 @@ function init() {
 
   Albums.push(defaultContent);
   loadAlbum(defaultContent);
+
   let add_btn = document.getElementById("add-btn");
   add_btn.onclick = function () {
     let first_img = document
@@ -138,13 +154,36 @@ function init() {
       .getElementsByTagName("img")[0];
     let [ret, img_url] = promptImage();
     if (ret != null) {
-      Albums[first_img.id].add_images(img_url);
+      Albums[first_img.id].images.push(img_url);
       loadAlbum(Albums[first_img.id]);
       alert("Image added successfully");
     }
   };
 
   let del_btn = document.getElementById("del-btn");
+  // del_btn.onclick = function () {
+  // alert("Clicked");
+  // let first_img = document
+  // .getElementById("carousel")
+  // .getElementsByTagName("img")[0];
+  // let expanded_img = document.getElementById("expanded-img");
+  // Albums[expanded_img.id].splice(expanded_img.alt, 1);
+  // loadAlbum(Albums[first_img.id]);
+  // let child_nodes = document.getElementById("carousel").childNodes;
+  // if (child_nodes.length === 1) {
+  // console.log(confirm("You are about to delete the album. Are you sure?"));
+  // }
+  // for (let i = 0; i < child_nodes.length; i++) {
+  // console.log(expanded_img.alt);
+  // console.log(child_nodes[i].alt);
+  // if (expanded_img.alt === child_nodes[i].alt) {
+  // document.getElementById("carousel").removeChild(child_nodes[i]);
+  // alert("Image deleted successfully.");
+  // loadAlbum(Albums[first_img.id]);
+  // break;
+  // }
+  // }
+  // };
 
   // Get the modal
   let modal = document.getElementById("album-modal");
