@@ -147,40 +147,6 @@ function init() {
 
   Albums.push(defaultContent);
   loadAlbum(defaultContent);
-  let add_btn = document.getElementById("add-btn");
-  add_btn.onclick = function () {
-    let first_img = document
-      .getElementById("carousel")
-      .getElementsByTagName("img")[0];
-    let [ret, img_url] = promptImage();
-    if (ret != null) {
-      Albums[first_img.id].add_images(img_url);
-      loadAlbum(Albums[first_img.id]);
-      alert("Image added successfully");
-    }
-  };
-
-  let del_btn = document.getElementById("del-btn");
-  del_btn.onclick = function () {
-    let first_img = document.getElementById("expanded-img");
-    let ret = confirm("Do you want to delete this image?");
-    if (ret) {
-      let inner_id = first_img.alt.match(/^[0-9]+/);
-      let array_id = first_img.alt.match(/[0-9]+$/);
-      if (Albums[inner_id].images.length > 1) {
-        let carousel = document.getElementById("carousel");
-        let list = carousel.getElementsByTagName("img");
-	console.log(list);
-        let display_next;
-        if (list[array_id - 1]) display_next = list[array_id - 1];
-        if (list[array_id + 1]) display_next = list[array_id + 1];
-        expandImg(display_next);
-      }
-      Albums[inner_id].images.splice(array_id, 1);
-      loadAlbum(Albums[inner_id]);
-      alert("Image deleted successfully.");
-    }
-  };
 
   // Get the modal
   let modal = document.getElementById("album-modal");
@@ -206,6 +172,65 @@ function init() {
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
+    }
+  };
+
+  let add_btn = document.getElementById("add-btn");
+  add_btn.onclick = function () {
+    let first_img = document
+      .getElementById("carousel")
+      .getElementsByTagName("img")[0];
+    let [ret, img_url] = promptImage();
+    if (ret != null) {
+      Albums[first_img.id].add_images(img_url);
+      loadAlbum(Albums[first_img.id]);
+      alert("Image added successfully");
+    }
+  };
+
+  let del_btn = document.getElementById("del-btn");
+  del_btn.onclick = function () {
+    let first_img = document.getElementById("expanded-img");
+    let ret = confirm("Do you want to delete this image?");
+    if (ret) {
+      let inner_id = first_img.alt.match(/^[0-9]+/);
+      let array_id = first_img.alt.match(/[0-9]+$/);
+      let list = document
+        .getElementById("carousel")
+        .getElementsByTagName("img");
+      if (array_id > 0 && Albums[inner_id].images.length > 1) {
+        let display_next;
+        if (list[array_id - 1]) display_next = list[array_id - 1];
+        if (list[array_id + 1]) display_next = list[array_id + 1];
+        expandImg(display_next);
+        Albums[inner_id].images.splice(array_id, 1);
+        loadAlbum(Albums[inner_id]);
+        alert("Image deleted successfully.");
+      } else if (array_id == 0 && Albums[inner_id].images.length > 1) {
+        expandImg(list[1]);
+        Albums[inner_id].images.shift();
+        loadAlbum(Albums[inner_id]);
+        alert("Image deleted successfully.");
+      } else if (Albums[inner_id].images.length === 1) {
+        let another_ret = confirm(
+          "NOTE: This will delete the album.\nProceed?"
+        );
+        if (another_ret) {
+          if (inner_id === 0) {
+            Albums.shift();
+          } else if (inner_id > 0 && inner_id < Albums.length) {
+            Albums.splice(inner_id, 1);
+          } else {
+            Albums.pop();
+          }
+          console.log(Albums);
+          alert("Album deleted");
+          alert(Albums.length);
+          let btn = document.getElementById("modal-btn");
+          btn.click();
+          return;
+        }
+      }
     }
   };
 }
