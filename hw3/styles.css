@@ -175,6 +175,10 @@ input[type="checkbox"] {
   outline: none;
 }
 
+.todo-app__view-buttons button:hover {
+  background-color: blue;
+}
+
 .todo-app__clean {
   vertical-align: middle;
 }

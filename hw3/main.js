@@ -1,4 +1,6 @@
-task_list = [];
+let task_list = [];
+let former_type = "all";
+
 class Task {
   constructor(name) {
     this.name = name;
@@ -7,66 +9,112 @@ class Task {
   }
 }
 
-function localCreateElement(element_type, element_attr, inner_text) {
-	inner_text = inner_text || null;
+function LocalCreateElement(element_type, element_attr, inner_text) {
+  inner_text = inner_text || null;
 
   let element = document.createElement(element_type);
-	if (inner_text)
-		element.innerText = inner_text;
+  if (inner_text) element.innerText = inner_text;
   for (let key in element_attr) {
     element.setAttribute(key, element_attr[key]);
   }
   return element;
 }
 
-function parseUnfinished() {
+function ParseUnfinished() {
+  let total = 0;
+  for (let i = 0; i < task_list.length; i++) {
+    if (task_list[i].active) total = total + 1;
+  }
+  let total_left = document.getElementsByClassName("todo-app__total")[0];
+  if (total > 0) {
+    total_left.innerText = total + " left(s)";
+  } else if (total === 0) {
+    total_left.innerText = "";
+  }
 
+  if (total < task_list.length) {
+    let clear_btn = document.getElementsByClassName("todo-app__clean")[0];
+    clear_btn.setAttribute("style", "display: flex;");
+  } else {
+    let clear_btn = document.getElementsByClassName("todo-app__clean")[0];
+    clear_btn.setAttribute("style", "display: none;");
+  }
 }
 
 function isChecked(node) {
-	let sibling = node.parentNode.nextSibling;
-	if (node.checked) {
-		sibling.setAttribute("style", "text-decoration: line-through;  opacity: 0.5;")
-		task_list[node.id].active = false; 
-	}
-	else
-		sibling.setAttribute("style", "text-decoration: none; opacity: 1;")
-		task_list[node.id].active = true;
+  let sibling = node.parentNode.nextSibling;
+  if (node.checked) {
+    sibling.setAttribute(
+      "style",
+      "text-decoration: line-through;  opacity: 0.5;"
+    );
+    task_list[node.id].active = false;
+  } else {
+    sibling.setAttribute("style", "text-decoration: none; opacity: 1;");
+    task_list[node.id].active = true;
+  }
+  ParseUnfinished();
 }
 
-function createNewListItem(name, index) {
-  let inner_list = localCreateElement("li", { class: "todo-app__item" });
+function CreateNewListItem(name, index, status) {
+  let inner_list = LocalCreateElement("li", { class: "todo-app__item" });
 
-  let inner_checkbox = localCreateElement("div", { class: "todo-app__checkbox" });
-  let checkbox_input = localCreateElement("input", { id: index, type: "checkbox", onclick: "isChecked(this)" });
-  let checkbox_label = localCreateElement("label", { for: index });
-	let textbox = localCreateElement("h1", {class: "todo-app__item-detail"}, name)
-	let x_image = localCreateElement("img", {src: "./img/x.png", class: "todo-app__item-x"});
+  let inner_checkbox = LocalCreateElement("div", {
+    class: "todo-app__checkbox",
+  });
+  let checkbox_input = LocalCreateElement("input", {
+    id: index,
+    type: "checkbox",
+    onclick: "isChecked(this)",
+  });
+  let checkbox_label = LocalCreateElement("label", { for: index });
+  let textbox = LocalCreateElement(
+    "h1",
+    { class: "todo-app__item-detail" },
+    name
+  );
+  let x_image = LocalCreateElement("img", {
+    src: "./img/x.png",
+    class: "todo-app__item-x",
+    onclick: "DeleteTask(this)",
+  });
 
-	inner_checkbox.appendChild(checkbox_input);
-	inner_checkbox.appendChild(checkbox_label);
-	
-	inner_list.appendChild(inner_checkbox);
-	inner_list.appendChild(textbox);
-	inner_list.appendChild(x_image);
+  inner_checkbox.appendChild(checkbox_input);
+  inner_checkbox.appendChild(checkbox_label);
 
-	return inner_list;
+  inner_list.appendChild(inner_checkbox);
+  inner_list.appendChild(textbox);
+  inner_list.appendChild(x_image);
+  if (!status) checkbox_input.click();
+
+  return inner_list;
 }
 
-function UpdateTaskList() {
+function UpdateTaskList(type) {
+  former_type = type;
   let todo_list = document.getElementById("todo-list");
   todo_list.innerHTML = "";
   for (let i = 0; i < task_list.length; i++) {
-		let inner_task = createNewListItem(task_list[i].name, i);
-    // let inner_task = document.createElement("li");
-    // inner_task.setAttribute("class", "todo-app__item");
-    // inner_task.innerHTML =
-      // '<div class="todo-app__checkbox"><input id="2" type="checkbox"><label for="2"></div>' +
-    // task_list[i].name +
-      // '<img src="./img/x.png" class="todo-app__item-x">';
-
-    todo_list.appendChild(inner_task);
+    let inner_task = CreateNewListItem(
+      task_list[i].name,
+      i,
+      task_list[i].active
+    );
+    if (type === "all") {
+      todo_list.appendChild(inner_task);
+    } else if (type === "completed") {
+      if (!task_list[i].active) todo_list.appendChild(inner_task);
+    } else if (type === "active") {
+      if (task_list[i].active) todo_list.appendChild(inner_task);
+    }
   }
+  let footer = document.getElementById("todo-footer");
+  if (task_list.length === 0) {
+    footer.setAttribute("style", "display: none;");
+  } else {
+    footer.setAttribute("style", "display: flex;");
+  }
+	ParseUnfinished();
 }
 
 function InsertTask(e) {
@@ -74,13 +122,29 @@ function InsertTask(e) {
     let input_box = document.getElementById("task-input");
     task_list.push(new Task(input_box.value));
   }
-  UpdateTaskList();
+
+  UpdateTaskList(former_type);
+}
+
+function DeleteTask(sign) {
+  let parent = sign.parentNode;
+  task_list.splice(parent.id, 1);
+  UpdateTaskList(former_type);
+}
+
+function ClearCompleted() {
+  task_list = task_list.filter(function (value) {
+    return value.active === true;
+  });
+  UpdateTaskList(former_type);
 }
 
 function init() {
   let input_box = document
     .getElementById("task-input")
     .addEventListener("keyup", InsertTask);
+  let footer = document.getElementById("todo-footer");
+  footer.setAttribute("style", "display: none;");
 }
 
 init();
