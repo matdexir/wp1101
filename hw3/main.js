@@ -118,7 +118,7 @@ function UpdateTaskList(type) {
   for (let i = 0; i < btn_list.length; i++) {
     // console.log(btn_list[i].innerText + "\n\n")
     let parent = btn_list[i].parentNode;
-    console.log(parent);
+    // console.log(parent);
     if (type === btn_list[i].innerText.toLowerCase()) {
       btn_list[i].setAttribute("style", "border: 1px solid black;");
     } else {
