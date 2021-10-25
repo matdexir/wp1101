@@ -132,6 +132,7 @@ function InsertTask(e) {
   if (e.keyCode === 13) {
     let input_box = document.getElementById("task-input");
     task_list.push(new Task(input_box.value));
+		input_box.value="";
   }
 
   UpdateTaskList(former_type);
