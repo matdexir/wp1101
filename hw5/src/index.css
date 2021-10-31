@@ -63,8 +63,13 @@ button:hover {
   opacity: 0.9;
 }
 
+.calculator__operators {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .calculator__operators button {
-  flex: 1 1 10%;
+  flex: 1 1 0%;
   background-color: var(--primary);
   font-weight: 700;
 }
@@ -75,7 +80,7 @@ button:hover {
 }
 
 .calculator__digits button {
-  flex: 1 1 33%;
-  max-width: 33%;
+  flex: 1 1 33.333%;
+  max-width: 33.333%;
   background-color: var(--dark);
 }

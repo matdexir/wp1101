@@ -13,11 +13,9 @@ function App() {
         input.search("NaN") !== -1 ||
         input.search("Infinity") !== -1 ||
         input.search("Error") !== -1
-      )
-			{
+      ) {
         setInput(current_input);
-			}
-      else setInput(input.concat(current_input));
+      } else setInput(input.concat(current_input));
     } else {
       if (input.length === 1 && input[0] === "0") setInput(current_input);
       else if (
@@ -31,7 +29,7 @@ function App() {
   };
 
   const handleOperator = (e) => {
-    // previewResult();
+    let operators = ["+", "-", "*", "/"];
     let current_operator = e.target.name;
     if (
       input.search("NaN") !== -1 ||
@@ -39,11 +37,11 @@ function App() {
       input.search("Error") !== -1
     )
       setInput("0" + current_operator);
+    else if (operators.includes(input[input.length - 1])) return;
     else setInput(input.concat(current_operator));
   };
 
   const handlePoint = (e) => {
-    // previewResult();
     let point = e.target.name;
     console.log(input.indexOf("."));
     if (
@@ -57,7 +55,6 @@ function App() {
   };
 
   const deleteChar = () => {
-    // previewResult();
     if (input.length > 1) setInput(input.slice(0, -1));
     else setInput("0");
   };
@@ -68,31 +65,43 @@ function App() {
     } catch (err) {
       setInput("Error");
     }
+		setPreview("0");
   };
 
-  const previewResult = () => {
-    try {
-      setPreview(eval(input).toString());
-    } catch (err) {
-      setPreview("err");
+  useEffect(() => {
+    if (!isNaN(input[input.length - 1])) {
+      try {
+        setPreview(eval(input).toString());
+      } catch (err) {
+        setPreview("err");
+      }
+    } else {
+      if (
+        input.search("NaN") !== -1 ||
+        input.search("Infinity") !== -1 ||
+        input.search("Error") !== -1
+      ) {
+        try {
+          setPreview(eval(input.slice(0, -1).toString()));
+        } catch (err) {
+          setPreview("err");
+        }
+      }
+
+			else 
+				setPreview(input);
     }
+  }, [input]);
+
+  const specialSign = {
+    backgroundColor: "var(--primary)",
   };
-
-	useEffect(() => {
-		if(!isNaN(input[input.length-1]))
-			previewResult();
-	}, [input])
-
-	const equalSign = {
-		backgroundColor: 'var(--primary)'
-	};
 
   return (
     <div className="App">
       <div className="calculator">
-        <header>Calculator</header>
         <div className="calculator__display">
-          <span>({preview})</span> {input}
+          {preview !== "0" ? <span>({preview})</span> : ""} {input}
         </div>
         <div className="calculator__operators">
           <button
@@ -117,9 +126,6 @@ function App() {
           </button>
         </div>
         <div className="calculator__digits">
-          <button name="0" onClick={handleClick}>
-            0
-          </button>
           <button name="1" onClick={handleClick}>
             1
           </button>
@@ -147,10 +153,13 @@ function App() {
           <button name="9" onClick={handleClick}>
             9
           </button>
-          <button name="." onClick={handlePoint}>
+          <button name="." style={specialSign} onClick={handlePoint}>
             .
           </button>
-          <button name="=" style={equalSign} onClick={outputResult}>
+          <button name="0" onClick={handleClick}>
+            0
+          </button>
+          <button name="=" style={specialSign} onClick={outputResult}>
             =
           </button>
         </div>
