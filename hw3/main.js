@@ -34,10 +34,10 @@ function ParseUnfinished() {
 
   if (total < task_list.length) {
     let clear_btn = document.getElementsByClassName("todo-app__clean")[0];
-    clear_btn.setAttribute("style", "display: flex;");
+    clear_btn.setAttribute("style", "visibility: visible;");
   } else {
     let clear_btn = document.getElementsByClassName("todo-app__clean")[0];
-    clear_btn.setAttribute("style", "display: none;");
+    clear_btn.setAttribute("style", "visibility: hidden;");
   }
 }
 
@@ -108,9 +108,10 @@ function UpdateTaskList(type) {
       if (task_list[i].active) todo_list.appendChild(inner_task);
     }
   }
+
   let footer = document.getElementById("todo-footer");
   if (task_list.length === 0) {
-    footer.setAttribute("style", "display: none;");
+    footer.setAttribute("style", "visible: hidden;");
   } else {
     footer.setAttribute("style", "display: flex;");
   }
@@ -140,7 +141,8 @@ function InsertTask(e) {
 
 function DeleteTask(sign) {
   let parent = sign.parentNode;
-  task_list.splice(parent.id, 1);
+  // task_list.splice(parent.id, 1);
+	
   UpdateTaskList(former_type);
 }
 
