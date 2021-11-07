@@ -73,11 +73,13 @@ function App() {
       input.slice(input.length - 3, input.length) === "**2"
     ) {
       let first_paren = input.lastIndexOf("(");
-      if (first_paren > 0)
+			console.log(first_paren);
+      if (first_paren > 1)
         setInput(
-          input.slice(0, first_paren - 1) + input.slice(first_paren + 1, -1)
+          input.slice(0, first_paren) + input.slice(first_paren + 1, input.length - 4)
         );
       else if (first_paren === 0) setInput(input.slice(1, -4));
+			else if (first_paren === 1) setInput("(" + input.slice(2, -4));
     } else setInput("0");
   };
 
