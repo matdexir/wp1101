@@ -3,7 +3,7 @@ import "./index.css";
 
 function App() {
   const [input, setInput] = useState("0");
-	const [mr, setMR] = useState("");
+  const [mr, setMR] = useState("");
   const [preview, setPreview] = useState("0");
   const [sc_notation, setNotation] = useState("0e0");
   const [check, setCheck] = useState(false);
@@ -66,48 +66,48 @@ function App() {
   };
 
   const deleteChar = () => {
-    // console.log(input.slice(input.length - 3, input.length));
-    if (input.length > 1 && !input.includes("(")) setInput(input.slice(0, -1));
+    if (
+      input.length > 1 &&
+      input.slice(input.length - 3, input.length) !== "**2"
+    )
+      setInput(input.slice(0, -1));
     else if (
       input.length > 1 &&
       input.slice(input.length - 3, input.length) === "**2"
     ) {
       let first_paren = input.lastIndexOf("(");
-			console.log(first_paren);
+      console.log(first_paren);
       if (first_paren > 1)
         setInput(
-          input.slice(0, first_paren) + input.slice(first_paren + 1, input.length - 4)
+          input.slice(0, first_paren) +
+            input.slice(first_paren + 1, input.length - 4)
         );
       else if (first_paren === 0) setInput(input.slice(1, -4));
-			else if (first_paren === 1) setInput("(" + input.slice(2, -4));
+      else if (first_paren === 1) setInput("(" + input.slice(2, -4));
     } else setInput("0");
   };
 
-	const readMemory = () => {
+  const readMemory = () => {
     let operators = ["+", "-", "*", "/"];
-		if (mr === "") {
-			alert("Memory is empty!");
-			return;
-		}
-		if (operators.includes(input[input.length - 1])) {
-			setInput(input + mr)
-		}
-		else
-			setInput(mr);
-	}
+    if (mr === "") {
+      alert("Memory is empty!");
+      return;
+    }
+    if (operators.includes(input[input.length - 1])) {
+      setInput(input + mr);
+    } else setInput(mr);
+  };
 
-	const clearMemory = () => {
-		setMR("");
-	}
+  const clearMemory = () => {
+    setMR("");
+  };
 
-	const saveMemory = () => {
+  const saveMemory = () => {
     let operators = ["+", "-", "*", "/"];
-		if(operators.includes(input[input.length - 1]))
-			setMR(eval(input.slice(0,-1)).toString());
-		else 
-			setMR(eval(input).toString());
-		
-	}
+    if (operators.includes(input[input.length - 1]))
+      setMR(eval(input.slice(0, -1)).toString());
+    else setMR(eval(input).toString());
+  };
 
   const squareInput = () => {
     let operators = ["+", "-", "*", "/"];
