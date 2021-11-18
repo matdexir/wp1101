@@ -10,11 +10,11 @@ router.post("/start", (_, res) => {
 
 router.get("/guess", (req, res) => {
   const number = getNumber();
-  const guessed = req.query.number;
+  const guessed = parseInt(req.query.number);
   // check if number in correct range
-  if (isNaN(guessed) || guessed < 1 || guessed > 100) {
+  if (!guessed || guessed < 1 || guessed > 100) {
     res.status(406).send({ msg: "Not a legal number..." });
-  } else if (number == guessed) {
+  } else if (number === guessed) {
 		res.send({msg: "Equal"})
   }
 	else {
