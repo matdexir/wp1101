@@ -1,14 +1,15 @@
 import cors from "cors";
 import express from "express";
-import apiRoute from "./routes/index";
+import apiRouter from "./routes/index";
 import Connection from "./mongo";
 
 // init middleware
 const app = express();
 app.use(cors());
+app.use(express.json());
 
-// define routes
-app.route("/api", apiRoute);
+// redirecting to our router api
+app.use("/api", apiRouter);
 
 // define server
 const PORT = process.env.PORT || 4000;

@@ -5,7 +5,7 @@ const DeleteDB = async () => {
     await ScoreCard.deleteMany({});
     console.log("Database cleared");
   } catch (e) {
-    throw new Error("Database deletion error:" + e);
+    throw new Error("Database deletion error in /src/routes/api/clear.js: " + e);
   }
 };
 

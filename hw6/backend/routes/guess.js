@@ -25,7 +25,7 @@ router.get("/guess", (req, res) => {
 	}
 });
 
-router.post("/restart", (req, res) => {
+router.post("/restart", (_, res) => {
   genNumber();
   res.json({ msg: "The game has restarted." });
 });
