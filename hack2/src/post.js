@@ -14,7 +14,7 @@ function Post(props) {
   const getPostDetail = async () => {
     const {
       data: { message, post },
-    } = await instance.get("/api/postDetail", { params: { pid } });
+    } = await instance.get("/postDetail", { params: { pid } });
     setData(post);
   };
 
@@ -22,7 +22,7 @@ function Post(props) {
   const delPost = async () => {
     const {
       data: { message },
-    } = await instance.delete("/api/post", { params: { pid } });
+    } = await instance.delete("/post", { params: { pid } });
 
     setTimeout(() => {
       props.navigate(-1);

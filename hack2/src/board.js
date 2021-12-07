@@ -11,7 +11,7 @@ function Board(props) {
   const fetchAllPosts = async () => {
     const {
       data: { message, data },
-    } = await instance.get("/api/allPosts");
+    } = await instance.get("/allPosts");
     setPosts(data);
   };
   useEffect(() => {

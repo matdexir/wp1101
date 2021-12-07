@@ -15,7 +15,7 @@ function Edit(props) {
   const handleSubmit = async () => {
     if (!title) return;
     if (!content) return;
-    await instance.post("/api/newPost", {
+    await instance.post("/newPost", {
       postId: uuidv4(),
       title,
       content,

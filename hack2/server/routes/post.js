@@ -5,11 +5,11 @@ import moment from "moment";
 const router = express.Router();
 
 // TODO 2-(1): create the 1st API (/api/allPosts)
-router.get("/api/allPosts", async (_, res) => {
+router.get("/allPosts", async (_, res) => {
   try {
     const ret = await Post.find({});
     ret.sort((a, b) => {
-      return moment(a.timestamp) - moment(b.timestamp);
+      return moment(b.timestamp) - moment(a.timestamp);
     });
     res.status(200).send({
       message: "success",
@@ -23,7 +23,7 @@ router.get("/api/allPosts", async (_, res) => {
   }
 });
 // TODO 3-(1): create the 2nd API (/api/postDetail)
-router.get("/api/postDetail", async (req, res) => {
+router.get("/postDetail", async (req, res) => {
   try {
     const ret = await Post.findOne({ postId: req.query.pid });
     console.log(req);
@@ -40,7 +40,7 @@ router.get("/api/postDetail", async (req, res) => {
 });
 
 // TODO 4-(1): create the 3rd API (/api/newPost)
-router.post("/api/newPost", async (req, res) => {
+router.post("/newPost", async (req, res) => {
   try {
     const newPost = new Post({
       postId: req.body.postId,
@@ -55,12 +55,13 @@ router.post("/api/newPost", async (req, res) => {
   } catch (e) {
     res.status(403).send({
       message: "error",
+			post: null
     });
   }
 });
 
 // TODO 5-(1): create the 4th API (/api/post)
-router.delete("/api/post", async (req, res) => {
+router.delete("/post", async (req, res) => {
 	try {
 		await Post.deleteOne({postId: req.query.pid })
 		res.status(200).send({
@@ -69,6 +70,7 @@ router.delete("/api/post", async (req, res) => {
 	} catch (e) {
 		res.status(403).send({
 			message: "error",
+			post: null
 		});	
 	}
 })
