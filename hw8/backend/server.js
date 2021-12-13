@@ -19,6 +19,13 @@ mongoose
   .then((_) => console.log("connection to MongoDB created"))
   .catch((err) => console.log(err));
 
+const broadcastMessage = (data, status) => {
+	wss.clients.forEach((client) => {
+		sendData(data, client);
+		sendStatus(status, client);
+	});
+}
+
 const db = mongoose.connection;
 db.once("open", () => {
   wss.on("connection", (ws) => {
@@ -35,13 +42,15 @@ db.once("open", () => {
             } catch (e) {
               throw new Error("Message DB error:" + e);
             }
-            sendData(["output", [payload]], ws);
-            sendStatus({ type: "success", msg: "Message sent." }, ws);
+            // sendData(["output", [payload]], ws);
+            // sendStatus({ type: "success", msg: "Message sent." }, ws);
+						broadcastMessage(["output", [payload]], { type: "success", msg: "Message sent."})
           break;
         case "clear":
             Message.deleteMany({}, () => {
-              sendData(["cleared"], ws);
-              sendStatus({ type: "info", msg: "message cache cleared." }, ws);
+              // sendData(["cleared"], ws);
+              // sendStatus({ type: "info", msg: "message cache cleared." }, ws);
+							broadcastMessage(["cleared"], { type: "info", msg: "message cache cleared."})
             });
           break;
         default:

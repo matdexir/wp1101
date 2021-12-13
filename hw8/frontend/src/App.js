@@ -1,13 +1,20 @@
 import "./App.css";
-import useChat from "./useChat";
-import { Button, Input, message, Tag } from "antd";
-import { useEffect, useRef, useState } from "react";
+import useChat from "./Hooks/useChat";
+import SignIn from "./Containers/signIn";
+import Chatroom from "./Containers/Chatroom";
+import { Input, message } from "antd";
+import { useEffect, useState } from "react";
+
+const LOCALSTORAGE_KEY = "save-me";
 
 function App() {
   const { status, messages, sendMessage, clearMessages } = useChat();
-  const [username, setUsername] = useState("");
+  const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
+  // const [username, setUsername] = useState("");
+  const [signedIn, setSignedIn] = useState(false);
+  const [me, setMe] = useState(savedMe || "");
   const [body, setBody] = useState("");
-  const bodyRef = useRef(null);
+  // const bodyRef = useRef(null);
 
   const displayStatus = (payload) => {
     if (payload.msg) {
@@ -28,56 +35,47 @@ function App() {
   useEffect(() => {
     displayStatus(status);
   }, [status]);
-	
+
+  useEffect(() => {
+    if (signedIn) {
+      localStorage.setItem(LOCALSTORAGE_KEY, me);
+    }
+  }, [signedIn, me]);
   return (
     <div className="App">
-      <div className="App-title">
-        <h1>Simple Chat</h1>
-        <Button type="primary" danger onClick={clearMessages}>
-          Clear
-        </Button>
-      </div>
-      <div className="App-messages">
-        {messages.length === 0 ? (
-          <p style={{ color: "#ccc" }}>No messages...</p>
-        ) : (
-          messages.map(({ name, body }, i) => (
-            <p className="App-message" key={i}>
-              <Tag color="blue">{name}</Tag>
-              {body}
-            </p>
-          ))
-        )}
-      </div>
-      <Input
-        placeholder="Username"
-        value={username}
-        style={{ marginBottom: 10 }}
-        onChange={(event) => setUsername(event.target.value)}
-        onKeyDown={(event) => {
-          if (event.key === "Enter") {
-            bodyRef.current.focus();
-          }
-        }}
-      ></Input>
-      <Input.Search
-        ref={bodyRef}
-        enterButton="Send"
-        value={body}
-        onChange={(event) => setBody(event.target.value)}
-        placeholder="Type a message here..."
-        onSearch={(msg) => {
-          if (!msg || !username) {
-            displayStatus({
-              type: "error",
-              msg: "Please enter an username and a message body",
-            });
-            return;
-          }
-          sendMessage({ name: username, body: msg });
-          setBody("");
-        }}
-      ></Input.Search>
+      {signedIn === true ? (
+        <>
+          <Chatroom
+            me={me}
+            messages={messages}
+            clearMessages={clearMessages}
+          ></Chatroom>
+          <Input.Search
+            enterButton="Send"
+            value={body}
+            onChange={(event) => setBody(event.target.value)}
+            placeholder="Type a message here..."
+            onSearch={(msg) => {
+              if (!msg) {
+                displayStatus({
+                  type: "error",
+                  msg: "Please enter a message body",
+                });
+                return;
+              }
+              sendMessage({ name: me, body: msg });
+              setBody("");
+            }}
+          ></Input.Search>
+        </>
+      ) : (
+        <SignIn
+          me={me}
+          setMe={setMe}
+          setSignedIn={setSignedIn}
+          displayStatus={displayStatus}
+        />
+      )}
     </div>
   );
 }
