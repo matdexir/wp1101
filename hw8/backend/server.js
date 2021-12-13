@@ -22,13 +22,12 @@ mongoose
 const db = mongoose.connection;
 db.once("open", () => {
   wss.on("connection", (ws) => {
-    // initData(ws);
     ws.onmessage = async (byteString) => {
       const { data } = byteString;
       const [task, payload] = JSON.parse(data);
+			console.log(payload);
       switch (task) {
         case "input":
-          {
             const { name, body } = payload;
             const message = new Message({ name, body });
             try {
@@ -37,28 +36,22 @@ db.once("open", () => {
               throw new Error("Message DB error:" + e);
             }
             sendData(["output", [payload]], ws);
-            sendStatus(
-              {
-                type: "success",
-                msg: "Message sent.",
-              },
-              ws
-            );
-          }
+            sendStatus({ type: "success", msg: "Message sent." }, ws);
           break;
-        case "clear": {
-          Message.deleteMany({}, () => {
-            sendData(["cleared"], ws);
-            sendStatus({ type: "info", msg: "message cache cleared." }, ws);
-          });
+        case "clear":
+            Message.deleteMany({}, () => {
+              sendData(["cleared"], ws);
+              sendStatus({ type: "info", msg: "message cache cleared." }, ws);
+            });
           break;
-        }
         default:
           break;
       }
     };
+		initData(ws);
   });
 });
+
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log(`Listening on http:\localhost\:${PORT}`);

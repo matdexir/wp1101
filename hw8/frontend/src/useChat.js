@@ -1,4 +1,5 @@
 import { useState } from "react";
+const client = new WebSocket("ws://localhost:4000");
 
 const useChat = () => {
   const [messages, setMessages] = useState([]);
@@ -10,35 +11,30 @@ const useChat = () => {
   const clearMessages = () => {
     sendData(["clear"]);
   };
-  const client = new WebSocket("ws://localhost:4000");
-  client.onmessage = (byteString) => {
+  client.onmessage = async (byteString) => {
     const { data } = byteString;
     const [task, payload] = JSON.parse(data);
+    // console.log(payload);
     switch (task) {
-      case "init": {
-        setMessages(() => payload);
+      case "init":
+        setMessages([...payload]);
         break;
-      }
-      case "output": {
+      case "output":
         setMessages([...messages, ...payload]);
         break;
-      }
-      case "status": {
+      case "status":
         setStatus(payload);
         break;
-      }
-
-      case "cleared": {
+      case "cleared":
         setMessages([]);
         break;
-      }
       default:
         break;
     }
   };
-	const sendData = async (data) => {
-		client.send(JSON.stringify(data));
-	};
+  const sendData = (data) => {
+    client.send(JSON.stringify(data));
+  };
   return {
     status,
     messages,

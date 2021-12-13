@@ -13,9 +13,7 @@ const initData = (ws) => {
     .sort({ created_at: -1 })
     .limit(100)
     .exec((err, res) => {
-      // console.log(res);
       if (err) throw err;
-      // initialize the app with existing messages
       sendData(["init", res], ws);
     });
 };
