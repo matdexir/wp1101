@@ -32,7 +32,7 @@ db.once("open", () => {
     ws.onmessage = async (byteString) => {
       const { data } = byteString;
       const [task, payload] = JSON.parse(data);
-			console.log(payload);
+			// console.log(payload);
       switch (task) {
         case "input":
             const { name, body } = payload;
