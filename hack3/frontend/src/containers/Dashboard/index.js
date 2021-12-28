@@ -85,11 +85,10 @@ export default function Dashboard() {
         const {
           data: { taskDeleted },
         } = subscriptionData;
-        if (prev.tasks.findIndex(taskDeleted) === -1) return prev;
+				let index = prev.tasks.findIndex(taskDeleted);
+        if (index === -1) return prev;
         return {
-          tasks: prev.tasks.filter((task) => {
-							return task.id !== taskDeleted;
-					}),
+          tasks: prev.tasks.slice(0, index).concat(prev.tasks.slice(index+1, prev.tasks.length)),
         };
       },
     });

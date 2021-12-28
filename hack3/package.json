@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "cypress": "^9.2.0",
     "dotenv-defaults": "^3.0.0",
     "mongoose": "^6.1.4"
   },
@@ -12,5 +11,8 @@
     "frontend": "cd ./frontend && npm start",
     "backend": "cd ./backend && npm start",
     "test": "npx cypress run --browser=firefox --spec cypress/integration/*.spec.js"
+  },
+  "dependencies": {
+    "cypress": "^9.2.0"
   }
 }
