@@ -81,14 +81,15 @@ export default function Dashboard() {
     subscribeToMore({
       document: TASK_DELETED_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
+				console.log(prev)
         if (!subscriptionData.data) return prev;
         const {
           data: { taskDeleted },
         } = subscriptionData;
-				let index = prev.tasks.findIndex(taskDeleted);
+				let index = prev.tasks.findIndex((task) => task.id === taskDeleted);
         if (index === -1) return prev;
         return {
-          tasks: prev.tasks.slice(0, index).concat(prev.tasks.slice(index+1, prev.tasks.length)),
+          tasks: [...prev.tasks.slice(0, index).concat(prev.tasks.slice(index+1, prev.tasks.length))],
         };
       },
     });

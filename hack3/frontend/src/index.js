@@ -30,8 +30,8 @@ const link = split(
       definition.operation === "subscription"
     );
   },
-  httpLink,
-  wsLink
+  wsLink,
+  httpLink
 );
 
 const client = new ApolloClient({
