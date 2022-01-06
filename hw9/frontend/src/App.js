@@ -1,20 +1,20 @@
 import "./App.css";
-import useChat from "./Hooks/useChat";
+import useChatBox from "./Hooks/useChatBox";
 import SignIn from "./Containers/signIn";
-import Chatroom from "./Containers/Chatroom";
+import ChatRoom from "./Containers/ChatRoom";
 import { Input, message } from "antd";
 import { useEffect, useState } from "react";
 
 const LOCALSTORAGE_KEY = "save-me";
 
 function App() {
-  const { status, messages, sendMessage, clearMessages } = useChat();
+  const {chatBoxes, createChatBox, removeChatBox} = useChatBox();
   const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
   // const [username, setUsername] = useState("");
-  const [signedIn, setSignedIn] = useState(false);
+  // FIXME: set to false
+  const [signedIn, setSignedIn] = useState(true);
   const [me, setMe] = useState(savedMe || "");
   const [body, setBody] = useState("");
-  // const bodyRef = useRef(null);
 
   const displayStatus = (payload) => {
     if (payload.msg) {
@@ -46,11 +46,12 @@ function App() {
     <div className="App">
       {signedIn === true ? (
         <>
-          <Chatroom
+          <ChatRoom
             me={me}
-            messages={messages}
-            clearMessages={clearMessages}
-          ></Chatroom>
+            chatBoxes={chatBoxes}
+						createChatBox={createChatBox}
+						removeChatBox={removeChatBox}
+          ></ChatRoom>
           <Input.Search
             enterButton="Send"
             value={body}
@@ -70,12 +71,7 @@ function App() {
           ></Input.Search>
         </>
       ) : (
-        <SignIn
-          me={me}
-          setMe={setMe}
-          setSignedIn={setSignedIn}
-          displayStatus={displayStatus}
-        />
+        <SignIn me={me} setMe={setMe} setSignedIn={setSignedIn} displayStatus={displayStatus} />
       )}
     </div>
   );
